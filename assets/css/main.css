@@ -18,6 +18,7 @@
   --bg-2: #161614;
   --ink: #ece8df;
   --ink-2: #a19d93;
+  --accent: #c8553d; /* shu (朱), bermellón de los sellos hanko */
   --line: rgba(236, 232, 223, 0.14);
   --gutter: clamp(20px, 5vw, 72px);
   --serif: "Cormorant", "Cormorant Garamond", Garamond, "Times New Roman", serif;
@@ -29,13 +30,21 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh; display: flex; flex-direction: column;
+  /* Fondo discreto: grano y manchas suaves de papel washi sobre tinta sumi, con una luz muy tenue arriba. */
+  background:
+    radial-gradient(ellipse 80% 60% at 70% -10%, rgba(236, 232, 223, 0.045), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .91 0 0 0 0 .87 .035 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' preserveAspectRatio='none'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .91 0 0 0 0 .87 .06 0 0 0 -.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E") center / cover fixed no-repeat,
+    var(--bg);
   color: var(--ink);
   font: 16px/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; height: auto; }
-a { color: inherit; }
+a { color: inherit; transition: color 0.2s; }
+/* Hover de los enlaces: acento shu */
+a:hover { color: var(--accent); }
 a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
 ::selection { background: var(--ink); color: var(--bg); }
 
@@ -64,28 +73,35 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
   display: inline-flex; gap: 10px; align-items: center;
   font: 500 12px/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase;
   text-decoration: none; padding-bottom: 6px; border-bottom: 1px solid var(--line);
-  transition: border-color 0.3s, gap 0.3s var(--ease);
+  transition: color 0.3s, border-color 0.3s, gap 0.3s var(--ease);
 }
-.more:hover { border-color: var(--ink); gap: 16px; }
+.more:hover { color: var(--accent); border-color: var(--accent); gap: 16px; }
 
 /* Cabecera */
 .site-header {
   position: relative; z-index: 10;
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 36px;
-  padding: 28px var(--gutter);
+  /* Idiomas arriba, pequeños; el menú principal debajo */
+  display: grid; grid-template-columns: 1fr auto; grid-template-areas: "title langs" "title menu";
+  align-items: center; gap: 14px 36px;
+  padding: 22px var(--gutter) 28px;
 }
+.site-header nav { grid-area: menu; justify-self: end; }
+.site-header .langs { grid-area: langs; justify-self: end; }
 .site-header.over-hero { position: absolute; inset: 0 0 auto; }
 .site-title {
   font: italic 400 24px/1 var(--serif);
-  text-decoration: none; margin-right: auto;
+  text-decoration: none; grid-area: title;
 }
 .menu, .langs { list-style: none; margin: 0; padding: 0; display: flex; gap: 28px; }
 .menu a, .langs a {
   font: 500 11px/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase;
   text-decoration: none; color: var(--ink-2); transition: color 0.2s;
 }
-.menu a:hover, .langs a:hover, .menu a[aria-current] { color: var(--ink); }
+.menu a:hover, .langs a:hover { color: var(--accent); }
+/* Sección activa: color de acento y una línea fina debajo */
+.menu a[aria-current] { color: var(--accent); text-decoration: underline 1px; text-underline-offset: 9px; }
 .langs { gap: 14px; }
+.langs a { font-size: 10px; }
 
 /* Imagen a pantalla completa */
 .hero {
@@ -103,8 +119,8 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
 .hero::after {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(to bottom, rgba(13, 13, 12, 0.7), transparent 28%),
-    linear-gradient(to top, rgba(13, 13, 12, 0.92), rgba(13, 13, 12, 0.5) 40%, transparent 75%);
+    linear-gradient(to bottom, color-mix(in srgb, var(--bg) 70%, transparent), transparent 28%),
+    linear-gradient(to top, color-mix(in srgb, var(--bg) 92%, transparent), color-mix(in srgb, var(--bg) 50%, transparent) 40%, transparent 75%);
 }
 .hero-text {
   position: relative; z-index: 1;
@@ -114,13 +130,14 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
 }
 .hero .eyebrow, .over-hero .menu a, .over-hero .langs a, .over-hero .site-title { color: var(--ink); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55); }
 .over-hero .menu a:not([aria-current]), .over-hero .langs a { opacity: 0.8; }
+.over-hero :is(.menu, .langs) a:hover, .over-hero .site-title:hover { color: var(--accent); opacity: 1; }
 .hero .display { text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
 .hero .display { font-size: clamp(44px, 8vw, 120px); margin-bottom: 32px; }
 .hero-book .display { margin-bottom: 0; }
 @keyframes hero-in { from { transform: scale(1.08); } to { transform: none; } }
 @keyframes rise { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 
-main { padding-bottom: 96px; }
+main { flex: 1; padding-bottom: 96px; }
 
 /* Presentación */
 .intro {
@@ -164,14 +181,38 @@ main { padding-bottom: 96px; }
 .prose p:first-child::first-letter { font-size: 3.4em; float: left; line-height: 0.82; padding: 0.06em 0.08em 0 0; }
 article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: auto; padding-left: var(--gutter); }
 
+/* Página con retrato («Sobre mí»): asimétrica, mucho espacio vacío (ma) */
+.portrait-page {
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 560px);
+  gap: clamp(48px, 9vw, 160px); align-items: start;
+  max-width: 1200px; padding: clamp(72px, 14vh, 160px) var(--gutter) clamp(64px, 10vh, 120px);
+}
+.portrait { margin: 0; position: relative; }
+.portrait img {
+  width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: 56% 40%;
+  filter: grayscale(1) contrast(0.92) brightness(0.88);
+}
+.portrait figcaption {
+  position: absolute; left: 100%; bottom: 0; margin-left: 14px;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font: 500 10px/1 var(--sans); letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-2);
+}
+.portrait-text { padding-top: clamp(40px, 18vh, 220px); }
+.portrait-text .display { font-size: clamp(44px, 5.5vw, 84px); margin-bottom: clamp(32px, 6vh, 64px); }
+.portrait-text .display::after {
+  content: ""; display: block; width: 40px; height: 1px; background: var(--ink-2); margin-top: clamp(28px, 5vh, 48px);
+}
+.portrait-text .prose { padding: 0; margin: 0; max-width: 34em; }
+
+
 .buy { text-align: center; margin: 0 0 clamp(48px, 8vh, 96px); }
 .button {
   display: inline-block; padding: 16px 32px;
   font: 500 12px/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase;
   text-decoration: none; border: 1px solid var(--ink);
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
-.button:hover { background: var(--ink); color: var(--bg); }
+.button:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 
 /* Galería con ritmo de libro */
 .gallery {
@@ -197,7 +238,7 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 }
 .pager a { text-decoration: none; display: flex; gap: 16px; align-items: baseline; }
 .pager .display { font-size: clamp(24px, 3vw, 40px); transition: color 0.3s; }
-.pager a:hover .display { color: var(--ink-2); }
+.pager a:hover, .pager a:hover .display { color: var(--accent); }
 .pager .next { margin-left: auto; text-align: right; }
 
 .site-footer {
@@ -205,6 +246,9 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
   color: var(--ink-2); font-size: 12px; letter-spacing: 0.06em;
   border-top: 1px solid var(--line);
 }
+.site-footer p { margin: 0; }
+.site-footer a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.site-footer a:hover { color: var(--ink); border-color: var(--ink); }
 
 /* Aparición al hacer scroll */
 @media (prefers-reduced-motion: no-preference) {
@@ -218,7 +262,7 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 /* Visor a pantalla completa */
 .lightbox {
   position: fixed; inset: 0; z-index: 100;
-  background: rgba(8, 8, 7, 0.98); color: var(--ink);
+  background: color-mix(in srgb, var(--bg) 98%, transparent); color: var(--ink);
   display: grid; grid-template-rows: 1fr auto; place-items: center;
   padding: 56px 72px 20px;
 }
@@ -227,19 +271,28 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 .lightbox p { margin: 14px 0 0; font: italic 17px/1.4 var(--serif); color: var(--ink-2); min-height: 1.4em; text-align: center; }
 .lightbox button {
   position: absolute; background: none; border: 0; color: var(--ink); cursor: pointer;
-  font: 300 40px/1 var(--serif); padding: 12px 16px; opacity: 0.6; transition: opacity 0.2s;
+  font: 300 40px/1 var(--serif); padding: 12px 16px; opacity: 0.6; transition: opacity 0.2s, color 0.2s;
 }
-.lightbox button:hover { opacity: 1; }
+.lightbox button:hover { opacity: 1; color: var(--accent); }
 .lb-close { top: 8px; right: 12px; }
 .lb-prev { left: 8px; top: 50%; transform: translateY(-50%); }
 .lb-next { right: 8px; top: 50%; transform: translateY(-50%); }
 body.lb-open { overflow: hidden; }
 
 @media (max-width: 800px) {
+  .portrait-page { grid-template-columns: minmax(0, 1fr); }
+  .portrait { width: min(78%, 340px); }
+  .portrait-text { padding-top: 0; }
   .book, .book.flip { grid-template-columns: minmax(0, 1fr); }
   .book.flip .book-img { order: 0; }
   .gallery .narrow.left, .gallery .narrow.right { margin: 0; align-self: center; }
   .menu { gap: 20px; }
   .lightbox { padding: 56px 8px 20px; }
   .lb-prev, .lb-next { top: auto; bottom: 8px; transform: none; }
+}
+
+/* Textura sumi: tinta muy diluida en nubes amplias, fija encima del papel y debajo del contenido. */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: url("../texturas/sumi.svg") center / cover no-repeat;
 }

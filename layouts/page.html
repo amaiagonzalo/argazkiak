@@ -1,5 +1,6 @@
 {{ define "main" }}
   {{ $isBook := eq .Section "proiektuak" }}
+  {{ $portrait := cond $isBook nil (.Resources.Get (.Params.photo | default "")) }}
   <article>
     {{ if $isBook }}
       <header class="hero hero-book">
@@ -11,16 +12,31 @@
           <h1 class="display">{{ .Title }}</h1>
         </div>
       </header>
+    {{ else if $portrait }}
+      {{/*
+        Página con retrato: foto vertical estrecha, crédito en vertical
+        y el texto al lado, con mucho aire alrededor.
+      */}}
+      <div class="portrait-page">
+        <figure class="portrait reveal">
+          {{ partial "responsive-img.html" (dict "img" $portrait "widths" (slice 600 1200) "sizes" "(min-width: 900px) 360px, 80vw" "alt" $.Title "eager" true) }}
+          {{ with $.Params.photo_credit }}<figcaption>{{ . }}</figcaption>{{ end }}
+        </figure>
+        <div class="portrait-text">
+          <h1 class="display">{{ $.Title }}</h1>
+          {{ with $.Content }}<div class="prose reveal">{{ . }}</div>{{ end }}
+        </div>
+      </div>
     {{ else }}
       <header class="page-head">
         <h1 class="display">{{ .Title }}</h1>
       </header>
     {{ end }}
 
-    {{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}
+    {{ if not $portrait }}{{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}{{ end }}
     {{ with .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
 
-    {{ $hero := cond $isBook (partial "hero-image.html" .) nil }}
+    {{ $hero := cond $isBook (partial "hero-image.html" .) $portrait }}
     {{ $photos := slice }}
     {{ range .Resources.ByType "image" }}
       {{ if or (not $hero) (ne .Name $hero.Name) }}{{ $photos = $photos | append . }}{{ end }}
