@@ -1,33 +1,50 @@
 {{ define "main" }}
+  {{ $isBook := eq .Section "proiektuak" }}
   <article>
-    <header class="page-head">
-      <h1>{{ .Title }}</h1>
-      {{ if eq .Section "proiektuak" }}
-        <p class="project-meta">
-          {{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}
-        </p>
-      {{ end }}
-    </header>
+    {{ if $isBook }}
+      <header class="hero hero-book">
+        {{ with partial "hero-image.html" . }}
+          {{ partial "responsive-img.html" (dict "img" . "widths" (slice 1200 2000 2800) "sizes" "100vw" "alt" "" "class" "hero-img" "eager" true) }}
+        {{ end }}
+        <div class="hero-text">
+          <p class="eyebrow">{{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}</p>
+          <h1 class="display">{{ .Title }}</h1>
+        </div>
+      </header>
+    {{ else }}
+      <header class="page-head">
+        <h1 class="display">{{ .Title }}</h1>
+      </header>
+    {{ end }}
 
-    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
-    {{ with .Params.buy }}<p><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
+    {{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}
+    {{ with .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
 
-    {{ $photos := .Resources.ByType "image" }}
+    {{ $hero := cond $isBook (partial "hero-image.html" .) nil }}
+    {{ $photos := slice }}
+    {{ range .Resources.ByType "image" }}
+      {{ if or (not $hero) (ne .Name $hero.Name) }}{{ $photos = $photos | append . }}{{ end }}
+    {{ end }}
     {{ if $photos }}
-      {{/* Pie de foto: el `title` de cada imagen en `resources` del front matter. */}}
+      {{/*
+        Galería con ritmo de libro: las horizontales casi a todo el ancho,
+        las verticales y cuadradas más estrechas, alternando lado.
+        Pie de foto: el `title` de cada imagen en `resources` del front matter.
+      */}}
       <div class="gallery" data-gallery>
+        {{ $side := 0 }}
         {{ range $photos }}
-          {{ $thumb := .Resize "800x webp" }}
-          {{ $thumb2x := .Resize "1600x webp" }}
           {{ $full := .Fit "2400x2400 webp" }}
           {{ $caption := cond (eq .Title .Name) "" .Title }}
-          <figure>
-            <a href="{{ $full.RelPermalink }}" data-width="{{ $full.Width }}" data-height="{{ $full.Height }}">
-              <img src="{{ $thumb.RelPermalink }}"
-                   srcset="{{ $thumb.RelPermalink }} 800w, {{ $thumb2x.RelPermalink }} 1600w"
-                   sizes="(min-width: 900px) 50vw, 100vw"
-                   width="{{ $thumb.Width }}" height="{{ $thumb.Height }}"
-                   alt="{{ $caption }}" loading="lazy" decoding="async">
+          {{ $wide := gt (div (float .Width) .Height) 1.2 }}
+          {{ $class := "wide" }}
+          {{ if not $wide }}
+            {{ $class = cond (modBool $side 2) "narrow left" "narrow right" }}
+            {{ $side = add $side 1 }}
+          {{ end }}
+          <figure class="{{ $class }} reveal">
+            <a href="{{ $full.RelPermalink }}">
+              {{ partial "responsive-img.html" (dict "img" . "widths" (slice 900 1600 2400) "sizes" (cond $wide "(min-width: 1500px) 1400px, 92vw" "(min-width: 900px) 46vw, 92vw") "alt" $caption) }}
             </a>
             {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
           </figure>
@@ -35,10 +52,10 @@
       </div>
     {{ end }}
 
-    {{ if eq .Section "proiektuak" }}
+    {{ if $isBook }}
       <nav class="pager" aria-label="{{ i18n "more_projects" }}">
-        {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
-        {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+        {{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span class="eyebrow">←</span> <span class="display">{{ .Title }}</span></a>{{ end }}
+        {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}"><span class="display">{{ .Title }}</span> <span class="eyebrow">→</span></a>{{ end }}
       </nav>
     {{ end }}
   </article>

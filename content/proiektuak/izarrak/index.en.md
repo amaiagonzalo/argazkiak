@@ -4,7 +4,7 @@ date: 2024-12-04
 location: Vitoria-Gasteiz
 publisher: ""   # PENDIENTE
 buy: ""         # PENDIENTE
-cover: portada.jpg
+cover: provisional-01.jpg
 ---
 A photobook of visual poetry: a story like so many others, told in a different language.
 

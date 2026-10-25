@@ -1,12 +1,24 @@
 {{ define "main" }}
-  <section class="intro">
-    <h1>{{ .Title | default site.Title }}</h1>
-    {{ .Content }}
-  </section>
-  {{ with site.GetPage "/proiektuak" }}
-    <section aria-labelledby="projects-title">
-      <h2 id="projects-title" class="section-title">{{ .Title }}</h2>
-      {{ partial "project-grid.html" .Pages }}
+  {{ $books := (site.GetPage "/proiektuak").Pages.ByDate.Reverse }}
+
+  {{/* Portada: el último fotolibro a pantalla completa. */}}
+  {{ with index $books 0 }}
+    <section class="hero">
+      {{ with partial "hero-image.html" . }}
+        {{ partial "responsive-img.html" (dict "img" . "widths" (slice 1200 2000 2800) "sizes" "100vw" "alt" "" "class" "hero-img" "eager" true) }}
+      {{ end }}
+      <div class="hero-text">
+        <p class="eyebrow">{{ i18n "latest" }} · {{ .Date.Year }}</p>
+        <p class="display">{{ .Title }}</p>
+        <a class="more" href="{{ .RelPermalink }}">{{ i18n "view" }} <span aria-hidden="true">→</span></a>
+      </div>
     </section>
   {{ end }}
+
+  <section class="intro reveal">
+    <h1 class="visually-hidden">{{ site.Title }}</h1>
+    {{ .Content }}
+  </section>
+
+  {{ partial "book-list.html" $books }}
 {{ end }}

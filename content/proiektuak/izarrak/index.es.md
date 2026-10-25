@@ -4,7 +4,7 @@ date: 2024-12-04
 location: Vitoria-Gasteiz
 publisher: ""   # PENDIENTE: editorial o autoedición
 buy: ""         # PENDIENTE: enlace para comprarlo
-cover: portada.jpg
+cover: provisional-01.jpg
 ---
 Fotolibro de poesía visual: una historia como tantas otras, contada en otro lenguaje.
 

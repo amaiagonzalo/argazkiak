@@ -2,6 +2,7 @@
 <html lang="{{ site.Language.Locale }}">
 <head>
   {{ partial "head.html" . }}
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
   {{ partial "header.html" . }}
@@ -9,7 +10,7 @@
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
-  {{ with resources.Get "js/lightbox.js" | js.Build (dict "minify" true) | fingerprint }}
+  {{ with resources.Get "js/main.js" | js.Build (dict "minify" true) | fingerprint }}
     <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
   {{ end }}
 </body>

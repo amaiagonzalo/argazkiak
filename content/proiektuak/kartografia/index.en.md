@@ -4,6 +4,6 @@ date: 2025-01-01  # PENDIENTE: fecha de publicación real
 location: ""      # PENDIENTE
 publisher: ""     # PENDIENTE
 buy: ""           # PENDIENTE
-cover: portada.jpg
+cover: provisional-01.jpg
 ---
 Photobook. *Text to come.*

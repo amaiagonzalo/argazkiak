@@ -1,7 +1,7 @@
 {{ define "main" }}
   <header class="page-head">
-    <h1>{{ .Title }}</h1>
+    <h1 class="display">{{ .Title }}</h1>
     {{ .Content }}
   </header>
-  {{ partial "project-grid.html" .Pages }}
+  {{ partial "book-list.html" .Pages.ByDate.Reverse }}
 {{ end }}

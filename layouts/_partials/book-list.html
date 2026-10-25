@@ -1,0 +1,18 @@
+{{/* Lista de fotolibros, portada y texto alternando de lado. Recibe las páginas. */}}
+<section class="books">
+  {{ range $i, $p := . }}
+    <article class="book reveal{{ if not (modBool $i 2) }} flip{{ end }}">
+      <a class="book-img" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">
+        {{ with partial "cover.html" . }}
+          {{ partial "responsive-img.html" (dict "img" . "widths" (slice 800 1400) "sizes" "(min-width: 900px) 45vw, 92vw" "alt" "") }}
+        {{ end }}
+      </a>
+      <div class="book-text">
+        <p class="eyebrow">{{ i18n "photobook" }} · {{ .Date.Year }}</p>
+        <h2 class="display"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <div class="summary">{{ .Summary }}</div>
+        <a class="more" href="{{ .RelPermalink }}">{{ i18n "view" }} <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  {{ end }}
+</section>

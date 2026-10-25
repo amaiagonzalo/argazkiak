@@ -1,0 +1,17 @@
+{{/*
+  <img> con srcset en WebP. Parámetros: img (recurso), widths (lista),
+  sizes, alt, class, eager (bool, para la imagen principal de la página).
+*/}}
+{{ $img := .img }}
+{{ $srcset := slice }}
+{{ $first := "" }}
+{{ range .widths }}
+  {{ $w := cond (gt . $img.Width) $img.Width . }}
+  {{ $r := $img.Resize (printf "%dx webp" $w) }}
+  {{ if not $first }}{{ $first = $r }}{{ end }}
+  {{ $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $r.Width) }}
+{{ end }}
+<img src="{{ $first.RelPermalink }}" srcset="{{ delimit $srcset ", " }}" sizes="{{ .sizes }}"
+     width="{{ $first.Width }}" height="{{ $first.Height }}" alt="{{ .alt }}"
+     {{ with .class }}class="{{ . }}"{{ end }}
+     {{ if .eager }}fetchpriority="high"{{ else }}loading="lazy" decoding="async"{{ end }}>

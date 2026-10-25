@@ -4,7 +4,7 @@ date: 2024-12-04
 location: Vitoria-Gasteiz
 publisher: ""   # PENDIENTE
 buy: ""         # PENDIENTE
-cover: portada.jpg
+cover: provisional-01.jpg
 ---
 Poesia bisualeko fotoliburua: beste askoren antzeko istorio bat, beste hizkuntza batean kontatua.
 

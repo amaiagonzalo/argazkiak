@@ -1,3 +1,17 @@
+// Aparición suave de los bloques al hacer scroll (el CSS solo los oculta
+// si hay JavaScript y el usuario no ha pedido reducir el movimiento).
+const reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  reveals.forEach((el) => io.observe(el));
+} else {
+  reveals.forEach((el) => el.classList.add('is-visible'));
+}
+
 // Visor a pantalla completa para las galerías. Sin JavaScript, cada foto
 // sigue siendo un enlace a su versión grande.
 const gallery = document.querySelector('[data-gallery]');

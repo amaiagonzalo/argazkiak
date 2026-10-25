@@ -1,0 +1,17 @@
+{{/*
+  Imagen para la cabecera a pantalla completa: `hero` del front matter,
+  o la primera foto horizontal del bundle, o la portada.
+*/}}
+{{ $img := "" }}
+{{ with .Params.hero }}
+  {{ $img = $.Resources.Get . }}
+{{ end }}
+{{ if not $img }}
+  {{ range .Resources.ByType "image" }}
+    {{ if and (not $img) (gt .Width .Height) }}{{ $img = . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ if not $img }}
+  {{ $img = partial "cover.html" . }}
+{{ end }}
+{{ return $img }}

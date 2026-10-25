@@ -64,5 +64,6 @@ git push
 
 - `hugo.toml`: título, idiomas y menús.
 - `layouts/`: las plantillas HTML (`home.html`, `section.html`, `page.html` y `_partials/`).
-- `assets/css/main.css`: el diseño. `assets/js/lightbox.js`: el visor de fotos a pantalla completa.
+- `assets/css/main.css`: el diseño. `assets/js/main.js`: el visor de fotos a pantalla completa y la aparición suave al hacer scroll.
+- `static/fonts/`: la tipografía Cormorant Garamond (licencia SIL Open Font License).
 - `i18n/`: los textos fijos de la web en cada idioma.
