@@ -1,0 +1,109 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fafaf8;
+  --ink: #161616;
+  --ink-2: #5d5c58;
+  --line: #e2e1dc;
+  --accent: #161616;
+  --overlay: rgba(10, 10, 10, 0.96);
+  --gutter: clamp(16px, 4vw, 48px);
+  --gap: clamp(8px, 1.5vw, 20px);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111110;
+    --ink: #eeede9;
+    --ink-2: #a3a29c;
+    --line: #2a2a28;
+    --accent: #eeede9;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.6 var(--font);
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: var(--gutter); top: 8px; background: var(--bg); padding: 4px 8px; z-index: 10; }
+
+/* Cabecera */
+.site-header {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 32px;
+  padding: 28px var(--gutter);
+}
+.site-title { font-weight: 600; letter-spacing: 0.02em; text-decoration: none; margin-right: auto; }
+.menu, .langs { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+.menu a, .langs a { text-decoration: none; color: var(--ink-2); }
+.menu a:hover, .langs a:hover, .menu a[aria-current] { color: var(--ink); }
+.menu a[aria-current] { text-decoration: underline; text-underline-offset: 6px; }
+.langs { gap: 12px; font-size: 13px; letter-spacing: 0.06em; }
+
+main { padding: 0 var(--gutter) 64px; }
+
+/* Textos */
+.intro { max-width: 640px; margin: 48px 0 64px; }
+.intro h1, .page-head h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; font-weight: 600; margin: 0 0 16px; letter-spacing: -0.01em; }
+.intro p { font-size: 18px; color: var(--ink-2); }
+.page-head { max-width: 720px; margin: 32px 0 40px; }
+.section-title { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 20px; }
+.prose { max-width: 640px; margin: 0 0 48px; font-size: 17px; }
+.project-meta { color: var(--ink-2); font-size: 14px; margin: 0; }
+
+/* Rejilla de proyectos */
+.projects {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: calc(var(--gap) * 2) var(--gap);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+.projects a { display: block; text-decoration: none; }
+.projects img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--line); transition: opacity 0.2s; }
+.projects a:hover img { opacity: 0.85; }
+.project-name { display: block; margin-top: 10px; font-weight: 600; }
+
+/* Galería */
+.gallery { columns: 2 360px; column-gap: var(--gap); }
+.gallery figure { margin: 0 0 var(--gap); break-inside: avoid; }
+.gallery a { display: block; cursor: zoom-in; }
+.gallery img { width: 100%; background: var(--line); }
+.gallery figcaption { font-size: 14px; color: var(--ink-2); padding-top: 6px; }
+
+.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); }
+.pager a { text-decoration: none; color: var(--ink-2); }
+.pager a:hover { color: var(--ink); }
+.pager .next { margin-left: auto; text-align: right; }
+
+.site-footer { padding: 32px var(--gutter); color: var(--ink-2); font-size: 13px; border-top: 1px solid var(--line); }
+
+/* Visor a pantalla completa */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--overlay); color: #eee;
+  display: grid; grid-template-rows: 1fr auto; place-items: center;
+  padding: 48px 56px 16px;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 100%; max-height: calc(100vh - 120px); width: auto; height: auto; object-fit: contain; }
+.lightbox p { margin: 12px 0 0; font-size: 14px; color: #bbb; min-height: 1.6em; text-align: center; }
+.lightbox button {
+  position: absolute; background: none; border: 0; color: #eee; cursor: pointer;
+  font: 32px/1 var(--font); padding: 12px; opacity: 0.7;
+}
+.lightbox button:hover { opacity: 1; }
+.lb-close { top: 8px; right: 8px; }
+.lb-prev { left: 4px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 4px; top: 50%; transform: translateY(-50%); }
+body.lb-open { overflow: hidden; }
+
+@media (max-width: 600px) {
+  .lightbox { padding: 48px 8px 16px; }
+  .lb-prev, .lb-next { top: auto; bottom: 8px; transform: none; }
+}

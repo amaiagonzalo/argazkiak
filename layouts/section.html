@@ -1,0 +1,7 @@
+{{ define "main" }}
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+  </header>
+  {{ partial "project-grid.html" .Pages }}
+{{ end }}

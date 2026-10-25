@@ -1,0 +1,44 @@
+{{ define "main" }}
+  <article>
+    <header class="page-head">
+      <h1>{{ .Title }}</h1>
+      {{ if eq .Section "proiektuak" }}
+        <p class="project-meta">
+          {{ with .Params.location }}{{ . }} · {{ end }}{{ .Date | time.Format ":date_long" }}
+        </p>
+      {{ end }}
+    </header>
+
+    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+    {{ $photos := .Resources.ByType "image" }}
+    {{ if $photos }}
+      {{/* Pie de foto: el `title` de cada imagen en `resources` del front matter. */}}
+      <div class="gallery" data-gallery>
+        {{ range $photos }}
+          {{ $thumb := .Resize "800x webp" }}
+          {{ $thumb2x := .Resize "1600x webp" }}
+          {{ $full := .Fit "2400x2400 webp" }}
+          {{ $caption := cond (eq .Title .Name) "" .Title }}
+          <figure>
+            <a href="{{ $full.RelPermalink }}" data-width="{{ $full.Width }}" data-height="{{ $full.Height }}">
+              <img src="{{ $thumb.RelPermalink }}"
+                   srcset="{{ $thumb.RelPermalink }} 800w, {{ $thumb2x.RelPermalink }} 1600w"
+                   sizes="(min-width: 900px) 50vw, 100vw"
+                   width="{{ $thumb.Width }}" height="{{ $thumb.Height }}"
+                   alt="{{ $caption }}" loading="lazy" decoding="async">
+            </a>
+            {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+          </figure>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ if eq .Section "proiektuak" }}
+      <nav class="pager" aria-label="{{ i18n "more_projects" }}">
+        {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+        {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}
