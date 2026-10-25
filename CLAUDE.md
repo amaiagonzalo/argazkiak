@@ -8,6 +8,7 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
   - **Desde el punto de vista de las estrellas** (`content/proiektuak/izarrak/`): poesía visual; presentado el 4 de diciembre de 2024 en Montehermoso (Vitoria-Gasteiz). Única fuente encontrada en internet: un anuncio de Gasteiz Hoy.
   - **Cartografía de una despedida** (`content/proiektuak/kartografia/`): no hay información en internet.
 - Los títulos de los libros se mantienen en castellano en los tres idiomas.
+- En euskera, fotolibro es **argazkiliburua** (no «fotoliburua»).
 - No inventar datos de los libros (textos, editorial, enlace de compra, fechas): preguntárselos a ella.
 
 ## Pendiente

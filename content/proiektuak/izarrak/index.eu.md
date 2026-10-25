@@ -6,6 +6,6 @@ publisher: ""   # PENDIENTE
 buy: ""         # PENDIENTE
 cover: provisional-01.jpg
 ---
-Poesia bisualeko fotoliburua: beste askoren antzeko istorio bat, beste hizkuntza batean kontatua.
+Poesia bisualeko argazkiliburua: beste askoren antzeko istorio bat, beste hizkuntza batean kontatua.
 
 2024ko abenduaren 4an aurkeztu zen Montehermoson (Vitoria-Gasteiz).

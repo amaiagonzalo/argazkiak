@@ -6,4 +6,4 @@ publisher: ""     # PENDIENTE
 buy: ""           # PENDIENTE
 cover: provisional-01.jpg
 ---
-Fotoliburua. *Testua falta da.*
+Argazkiliburua. *Testua falta da.*
