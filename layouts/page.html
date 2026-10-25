@@ -4,12 +4,13 @@
       <h1>{{ .Title }}</h1>
       {{ if eq .Section "proiektuak" }}
         <p class="project-meta">
-          {{ with .Params.location }}{{ . }} · {{ end }}{{ .Date | time.Format ":date_long" }}
+          {{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}
         </p>
       {{ end }}
     </header>
 
     {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    {{ with .Params.buy }}<p><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
 
     {{ $photos := .Resources.ByType "image" }}
     {{ if $photos }}

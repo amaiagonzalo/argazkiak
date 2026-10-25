@@ -40,6 +40,8 @@ En el front matter de cada `index.*.md`:
 | `title` | Nombre del proyecto en ese idioma |
 | `date` | Fecha (ordena los proyectos, el más reciente primero) |
 | `location` | Lugar, opcional |
+| `publisher` | Editorial, opcional (sale junto a «Fotolibro» y el año) |
+| `buy` | Enlace para comprar el libro, opcional (añade un botón) |
 | `cover` | Foto de portada; si no se indica, la primera |
 | `resources` | Pies de foto opcionales, en ese idioma |
 

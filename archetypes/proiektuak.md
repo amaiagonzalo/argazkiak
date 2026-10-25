@@ -2,6 +2,8 @@
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 date: {{ .Date }}
 location: ""
+publisher: ""   # editorial (opcional)
+buy: ""         # enlace para comprar el libro (opcional)
 # Foto de portada (si no se indica, se usa la primera por orden de nombre):
 cover: ""
 # Pies de foto opcionales:
