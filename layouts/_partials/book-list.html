@@ -8,7 +8,7 @@
         {{ end }}
       </a>
       <div class="book-text">
-        <p class="eyebrow">{{ i18n "photobook" }} · {{ .Date.Year }}</p>
+        <p class="eyebrow">{{ i18n "photobook" }} · {{ .Date.Year }}{{ if .Params.soldout }} · <span class="soldout">{{ i18n "soldout" }}</span>{{ end }}</p>
         <h2 class="display"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
         <div class="summary">{{ .Summary }}</div>
         <a class="more" href="{{ .RelPermalink }}">{{ i18n "view" }} <span aria-hidden="true">→</span></a>

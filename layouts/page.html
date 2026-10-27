@@ -8,7 +8,7 @@
           {{ partial "responsive-img.html" (dict "img" . "widths" (slice 1200 2000 2800) "sizes" "100vw" "alt" "" "class" "hero-img" "eager" true) }}
         {{ end }}
         <div class="hero-text">
-          <p class="eyebrow">{{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}</p>
+          <p class="eyebrow">{{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}{{ if .Params.soldout }} · <span class="soldout">{{ i18n "soldout" }}</span>{{ end }}</p>
           <h1 class="display">{{ .Title }}</h1>
         </div>
       </header>
@@ -34,7 +34,18 @@
     {{ end }}
 
     {{ if not $portrait }}{{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}{{ end }}
-    {{ with .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
+    {{ with and (not .Params.soldout) .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
+    {{ with .Params.where }}
+      {{/* Dónde se puede ver el libro: `where` en el front matter, lista de {name, url}. */}}
+      <section class="where reveal" aria-labelledby="where">
+        <h2 class="eyebrow" id="where">{{ i18n "where" }}</h2>
+        <ul>
+          {{ range . }}
+            <li>{{ with .url }}<a href="{{ . }}">{{ end }}{{ .name }}{{ if .url }} <span aria-hidden="true">↗</span></a>{{ end }}</li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
 
     {{ $hero := cond $isBook (partial "hero-image.html" .) $portrait }}
     {{ $photos := slice }}

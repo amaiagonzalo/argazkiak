@@ -8,7 +8,7 @@
         {{ partial "responsive-img.html" (dict "img" . "widths" (slice 1200 2000 2800) "sizes" "100vw" "alt" "" "class" "hero-img" "eager" true) }}
       {{ end }}
       <div class="hero-text">
-        <p class="eyebrow">{{ i18n "latest" }} · {{ .Date.Year }}</p>
+        <p class="eyebrow">{{ i18n "latest" }} · {{ .Date.Year }}{{ if .Params.soldout }} · <span class="soldout">{{ i18n "soldout" }}</span>{{ end }}</p>
         <p class="display">{{ .Title }}</p>
         <a class="more" href="{{ .RelPermalink }}">{{ i18n "view" }} <span aria-hidden="true">→</span></a>
       </div>

@@ -15,7 +15,7 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
 
 - Textos de presentación de cada libro (la traducción al euskera de los textos actuales está sin revisar).
 - Fotos reales: portada e interiores. Ahora hay imágenes generadas `provisional-*.jpg` (cielo estrellado y curvas de nivel) que hay que sustituir.
-- Editorial (`publisher`) y enlace de compra (`buy`) de cada libro.
+- Editorial (`publisher`) de cada libro y enlace de compra (`buy`) de *Cartografía de una despedida*. *Desde el punto de vista de las estrellas* está agotado (`soldout: true`: «Agortuta» en la línea pequeña y sin botón de compra); se puede consultar en las bibliotecas de la lista `where`.
 - Año real de *Cartografía de una despedida*: ahora pone `2025-01-01`, inventado.
 - Textos de la portada (`content/_index.*.md`) y de «Sobre mí» (`content/about/`): son de ejemplo. La foto de «Sobre mí» (`content/about/amaia.jpg`, parámetros `photo` y `photo_credit`) es real y de Barbanero: mantener el crédito.
 - Aviso legal (LSSI art. 10) si la web tiene actividad económica, como vender los libros: necesita su nombre completo, NIF y un correo de contacto. Preguntárselos; no inventarlos.

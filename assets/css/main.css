@@ -69,6 +69,8 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
   color: var(--ink-2);
   margin: 0 0 18px;
 }
+/* «Agortuta»: el libro ya no se vende (soldout en el front matter) */
+.eyebrow .soldout { color: var(--ink); }
 .more {
   display: inline-flex; gap: 10px; align-items: center;
   font: 500 12px/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase;
@@ -206,6 +208,15 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 
 
 .buy { text-align: center; margin: 0 0 clamp(48px, 8vh, 96px); }
+
+/* Dónde encontrar el libro: lista breve bajo el texto, líneas finas entre lugares */
+.where { max-width: 680px; margin: 0 auto clamp(64px, 12vh, 140px); padding: 0 var(--gutter); }
+.where .eyebrow { margin-bottom: 20px; }
+.where ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.where li { border-bottom: 1px solid var(--line); padding: 16px 0; font: 300 clamp(18px, 1.6vw, 21px)/1.4 var(--serif); }
+.where a { text-decoration: none; transition: color 0.3s; }
+.where a span { font-size: 0.75em; color: var(--ink-2); }
+.where a:hover, .where a:hover span { color: var(--accent); }
 .button {
   display: inline-block; padding: 16px 32px;
   font: 500 12px/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase;
