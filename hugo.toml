@@ -70,7 +70,7 @@ disableKinds = ['taxonomy', 'term']
     #   pageRef = '/urtekariak'
     #   weight = 2
     [[languages.es.menus.main]]
-      name = 'Cuaderno'
+      name = 'Garabatos'
       pageRef = '/zirriborroak'
       weight = 3
     [[languages.es.menus.main]]
