@@ -3,5 +3,10 @@
     <h1 class="display">{{ .Title }}</h1>
     {{ .Content }}
   </header>
-  {{ partial "book-list.html" .Pages.ByDate.Reverse }}
+  {{ with .Pages }}
+    {{ partial "book-list.html" . }}
+  {{ else }}
+    {{/* Sección todavía vacía (por ejemplo, Anuarios antes de subir el primero) */}}
+    <p class="soon">{{ i18n "soon" }}</p>
+  {{ end }}
 {{ end }}

@@ -1,0 +1,3 @@
+{{- /* Enlaces del Markdown: los externos se abren en una pestaña nueva (ver link-attrs.html). */ -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ partial "link-attrs.html" .Destination }}>{{ .Text }}</a>
+{{- /* sin salto de línea final */ -}}

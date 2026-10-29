@@ -1,5 +1,5 @@
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
-{{ $overHero := or .IsHome (and .IsPage (eq .Section "proiektuak")) }}
+{{ $overHero := or .IsHome (and .IsPage (in (slice "argazkiliburuak" "urtekariak") .Section)) }}
 <header class="site-header{{ if $overHero }} over-hero{{ end }}">
   <a class="site-title" href="{{ site.Home.RelPermalink }}">{{ site.Params.author }}</a>
   <nav aria-label="{{ i18n "menu" }}">
@@ -7,7 +7,7 @@
       {{ $current := . }}
       {{ range site.Menus.main }}
         {{ $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
-        <li><a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+        <li><a href="{{ .URL }}"{{ partial "link-attrs.html" .URL }}{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
       {{ end }}
     </ul>
   </nav>

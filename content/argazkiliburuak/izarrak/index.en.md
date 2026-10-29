@@ -1,5 +1,6 @@
 ---
 title: "Desde el punto de vista de las estrellas"
+weight: 1  # orden en las listas
 date: 2024-12-04
 location: Vitoria-Gasteiz
 publisher: ""   # PENDIENTE

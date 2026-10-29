@@ -69,8 +69,15 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
   color: var(--ink-2);
   margin: 0 0 18px;
 }
-/* «Agortuta»: el libro ya no se vende (soldout en el front matter) */
-.eyebrow .soldout { color: var(--ink); }
+/* «Agortuta»: sello con marco bajo el título (soldout en el front matter) */
+.soldout {
+  display: inline-block; margin: 20px 0 0; padding: 9px 16px;
+  font: 500 11px/1 var(--sans); letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink); border: 1px solid var(--ink);
+}
+.hero .soldout { display: table; background: rgba(13, 13, 12, 0.45); }
+.hero .soldout + .more { margin-top: 32px; }
+.book-text .soldout { margin: 0 0 28px; }
 .more {
   display: inline-flex; gap: 10px; align-items: center;
   font: 500 12px/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase;
@@ -173,6 +180,7 @@ main { flex: 1; padding-bottom: 96px; }
 /* Páginas de texto (y cabecera de la lista de proyectos) */
 .page-head { padding: clamp(64px, 12vh, 140px) var(--gutter) clamp(48px, 8vh, 96px); max-width: 1100px; }
 .page-head .display { font-size: clamp(48px, 7vw, 104px); }
+.soon { padding: 0 var(--gutter) clamp(96px, 20vh, 220px); margin: 0; font: 300 italic clamp(20px, 2vw, 26px)/1.4 var(--serif); color: var(--ink-2); }
 
 .prose {
   max-width: 680px; margin: 0 auto;
@@ -234,12 +242,91 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 .gallery figure { margin: 0; }
 .gallery .wide { width: min(100%, 1400px); align-self: center; }
 .gallery .narrow { width: min(100%, 640px); }
+.gallery .small { width: min(100%, 420px); }
+/* Foto centrada y algo más pequeña que las anchas (`center`) */
+.gallery .center { width: min(100%, 1000px); align-self: center; }
+/* Varias fotos en la misma fila (`row`), alineadas por abajo */
+.gallery .row { display: flex; align-items: flex-end; justify-content: center; gap: clamp(32px, 6vw, 96px); }
+.gallery .row figure, .gallery .row .narrow.left, .gallery .row .narrow.right { margin: 0; align-self: auto; }
+.gallery .row .narrow { width: min(46%, 560px); }
+.gallery .row .narrow.small { width: min(30%, 360px); }
+/* Tríptico: tres fotos juntas, del mismo tamaño */
+.gallery .triptych { gap: clamp(12px, 1.6vw, 24px); }
+.gallery .triptych .narrow { width: auto; flex: 1 1 0; max-width: 440px; }
+@media (max-width: 700px) {
+  .gallery .row:not(.triptych) { flex-direction: column; align-items: stretch; gap: 48px; }
+  .gallery .row:not(.triptych) .narrow, .gallery .row .narrow.small { width: auto; }
+  .gallery .row .small { align-self: flex-end; width: 70%; }
+}
 .gallery .narrow.left { align-self: flex-start; margin-left: 8vw; }
 .gallery .narrow.right { align-self: flex-end; margin-right: 8vw; }
 .gallery a { display: block; cursor: zoom-in; background: var(--bg-2); }
+.gallery img { display: block; width: 100%; height: auto; }
 .gallery figcaption {
   font: italic 400 17px/1.4 var(--serif); color: var(--ink-2);
   padding-top: 14px;
+}
+
+/*
+  Papel cebolla sobre una foto (`vellum` en el front matter), como en el libro: al
+  levantarla se aparta (ver abajo).
+*/
+.vellum-toggle { position: absolute; opacity: 0; pointer-events: none; }
+.vellum-frame { position: relative; perspective: 2400px; }
+.gallery { overflow-x: clip; }
+.vellum {
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; place-items: center; padding: 14%;
+  cursor: pointer;
+  background: rgba(238, 236, 228, 0.5);
+  backdrop-filter: blur(3px) saturate(0.8);
+  -webkit-backdrop-filter: blur(3px) saturate(0.8);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 18px 40px rgba(0, 0, 0, 0.25);
+  color: #2b2a26;
+  /*
+    Tipografía del libro: MingLiU_HKSCS-ExtB, de Windows. No se puede alojar
+    (licencia de Microsoft), así que solo la ve quien la tiene instalada.
+  */
+  font: 400 clamp(17px, 1.7vw, 22px)/1.6 "MingLiU_HKSCS-ExtB", "MingLiU-ExtB", "PMingLiU-ExtB", var(--serif);
+  transform-origin: left center;
+  transition: transform 1.4s var(--ease), opacity 0.9s var(--ease), box-shadow 1.4s var(--ease);
+}
+/* Tres bloques: «y volar» en la mitad derecha y algo más arriba, como si hubiera volado */
+.vellum-text { display: flex; flex-direction: column; gap: 2.4em; width: 100%; }
+.vellum-text span { max-width: 72%; text-wrap: balance; }
+.vellum-text span:nth-child(2) { align-self: flex-start; margin-left: 58%; translate: 0 -0.5em; white-space: nowrap; }
+.vellum-hint {
+  display: inline-block; margin-top: 16px; cursor: pointer;
+  font: 500 11px/1 var(--sans); letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-2); padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  transition: color 0.3s, border-color 0.3s;
+}
+.vellum-hint:hover { color: var(--accent); border-color: var(--accent); }
+.vellum-toggle:focus-visible ~ .vellum-hint { outline: 1px solid var(--ink); outline-offset: 6px; }
+.vellum-hint .lower, .vellum-toggle:checked ~ .vellum-hint .lift { display: none; }
+.vellum-toggle:checked ~ .vellum-hint .lower { display: inline; }
+
+/* Levantada: se desvanece hacia arriba… */
+.vellum-toggle:checked + .vellum-frame .vellum {
+  opacity: 0; transform: translateY(-6%); pointer-events: none;
+}
+/*
+  …o, en pantallas anchas, como un pliego del libro: la foto en la mitad
+  derecha y la hoja gira hacia la izquierda y queda vuelta, con el texto del
+  revés. (Sin el desenfoque al girar: con él Chrome deja la foto en negro.)
+*/
+@media (min-width: 1100px) {
+  .gallery .narrow.has-vellum { align-self: flex-start; margin: 0 0 0 50%; width: min(640px, 44vw); }
+  .vellum-toggle:checked + .vellum-frame .vellum {
+    opacity: 0.55; pointer-events: auto;
+    transform: rotateY(-180deg);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vellum { transition: opacity 0.4s; }
+  .vellum-toggle:checked + .vellum-frame .vellum { transform: none; opacity: 0; pointer-events: none; }
 }
 
 .pager {

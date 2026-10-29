@@ -1,0 +1,2 @@
+{{- /* Sello «Agortuta» para un libro con `soldout: true`. Recibe la página. */ -}}
+{{ if .Params.soldout }}<p class="soldout">{{ i18n "soldout" }}</p>{{ end }}

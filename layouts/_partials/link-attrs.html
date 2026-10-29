@@ -1,0 +1,10 @@
+{{/*
+  Atributos para un enlace: si la dirección lleva a otro dominio, se abre
+  en una pestaña nueva. Recibe la URL; devuelve los atributos (o nada).
+*/}}
+{{ $attrs := "" }}
+{{ $u := urls.Parse . }}
+{{ if and $u.Host (ne $u.Host (urls.Parse site.BaseURL).Host) }}
+  {{ $attrs = ` target="_blank" rel="noopener"` }}
+{{ end }}
+{{ return safeHTMLAttr $attrs }}

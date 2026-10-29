@@ -19,7 +19,7 @@ disableKinds = ['taxonomy', 'term']
   [cascade.build]
     publishResources = false
   [cascade.target]
-    path = '{/proiektuak/**,/about}'
+    path = '{/argazkiliburuak/**,/urtekariak/**,/about}'
 
 [languages]
   [languages.eu]
@@ -30,13 +30,17 @@ disableKinds = ['taxonomy', 'term']
     [languages.eu.params]
       description = 'Amaia Gonzaloren argazki proiektuak.'
     [[languages.eu.menus.main]]
-      name = 'Proiektuak'
-      pageRef = '/proiektuak'
+      name = 'Argazkiliburuak'
+      pageRef = '/argazkiliburuak'
       weight = 1
+    [[languages.eu.menus.main]]
+      name = 'Urtekariak'
+      pageRef = '/urtekariak'
+      weight = 2
     [[languages.eu.menus.main]]
       name = 'Niri buruz'
       pageRef = '/about'
-      weight = 2
+      weight = 3
 
   [languages.es]
     locale = 'es-ES'
@@ -46,17 +50,23 @@ disableKinds = ['taxonomy', 'term']
     [languages.es.params]
       description = 'Proyectos fotográficos de Amaia Gonzalo.'
     [languages.es.permalinks.section]
-      proiektuak = '/proyectos/'
+      argazkiliburuak = '/fotolibros/'
+      urtekariak = '/anuarios/'
     [languages.es.permalinks.page]
-      proiektuak = '/proyectos/:contentbasename/'
+      argazkiliburuak = '/fotolibros/:contentbasename/'
+      urtekariak = '/anuarios/:contentbasename/'
     [[languages.es.menus.main]]
-      name = 'Proyectos'
-      pageRef = '/proiektuak'
+      name = 'Fotolibros'
+      pageRef = '/argazkiliburuak'
       weight = 1
+    [[languages.es.menus.main]]
+      name = 'Anuarios'
+      pageRef = '/urtekariak'
+      weight = 2
     [[languages.es.menus.main]]
       name = 'Sobre mí'
       pageRef = '/about'
-      weight = 2
+      weight = 3
 
   [languages.en]
     locale = 'en-GB'
@@ -66,14 +76,20 @@ disableKinds = ['taxonomy', 'term']
     [languages.en.params]
       description = 'Photography projects by Amaia Gonzalo.'
     [languages.en.permalinks.section]
-      proiektuak = '/projects/'
+      argazkiliburuak = '/photobooks/'
+      urtekariak = '/yearbooks/'
     [languages.en.permalinks.page]
-      proiektuak = '/projects/:contentbasename/'
+      argazkiliburuak = '/photobooks/:contentbasename/'
+      urtekariak = '/yearbooks/:contentbasename/'
     [[languages.en.menus.main]]
-      name = 'Projects'
-      pageRef = '/proiektuak'
+      name = 'Photobooks'
+      pageRef = '/argazkiliburuak'
       weight = 1
+    [[languages.en.menus.main]]
+      name = 'Yearbooks'
+      pageRef = '/urtekariak'
+      weight = 2
     [[languages.en.menus.main]]
       name = 'About'
       pageRef = '/about'
-      weight = 2
+      weight = 3

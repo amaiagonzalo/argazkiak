@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{ $isBook := eq .Section "proiektuak" }}
+  {{ $isBook := in (slice "argazkiliburuak" "urtekariak") .Section }}
   {{ $portrait := cond $isBook nil (.Resources.Get (.Params.photo | default "")) }}
   <article>
     {{ if $isBook }}
@@ -8,8 +8,9 @@
           {{ partial "responsive-img.html" (dict "img" . "widths" (slice 1200 2000 2800) "sizes" "100vw" "alt" "" "class" "hero-img" "eager" true) }}
         {{ end }}
         <div class="hero-text">
-          <p class="eyebrow">{{ i18n "photobook" }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}{{ if .Params.soldout }} · <span class="soldout">{{ i18n "soldout" }}</span>{{ end }}</p>
+          <p class="eyebrow">{{ i18n (cond (eq .Section "urtekariak") "yearbook" "photobook") }}{{ with .Params.publisher }} · {{ . }}{{ end }} · {{ .Date.Year }}</p>
           <h1 class="display">{{ .Title }}</h1>
+          {{ partial "soldout.html" . }}
         </div>
       </header>
     {{ else if $portrait }}
@@ -20,7 +21,7 @@
       <div class="portrait-page">
         <figure class="portrait reveal">
           {{ partial "responsive-img.html" (dict "img" $portrait "widths" (slice 600 1200) "sizes" "(min-width: 900px) 360px, 80vw" "alt" $.Title "eager" true) }}
-          {{ with $.Params.photo_credit }}<figcaption>{{ . }}</figcaption>{{ end }}
+          {{ with $.Params.photo_credit }}<figcaption>{{ $.RenderString . }}</figcaption>{{ end }}
         </figure>
         <div class="portrait-text">
           <h1 class="display">{{ $.Title }}</h1>
@@ -34,14 +35,14 @@
     {{ end }}
 
     {{ if not $portrait }}{{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}{{ end }}
-    {{ with and (not .Params.soldout) .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}">{{ i18n "buy" }}</a></p>{{ end }}
+    {{ with and (not .Params.soldout) .Params.buy }}<p class="buy reveal"><a class="button" href="{{ . }}"{{ partial "link-attrs.html" . }}>{{ i18n "buy" }}</a></p>{{ end }}
     {{ with .Params.where }}
       {{/* Dónde se puede ver el libro: `where` en el front matter, lista de {name, url}. */}}
       <section class="where reveal" aria-labelledby="where">
         <h2 class="eyebrow" id="where">{{ i18n "where" }}</h2>
         <ul>
           {{ range . }}
-            <li>{{ with .url }}<a href="{{ . }}">{{ end }}{{ .name }}{{ if .url }} <span aria-hidden="true">↗</span></a>{{ end }}</li>
+            <li>{{ with .url }}<a href="{{ . }}"{{ partial "link-attrs.html" . }}>{{ end }}{{ .name }}{{ if .url }} <span aria-hidden="true">↗</span></a>{{ end }}</li>
           {{ end }}
         </ul>
       </section>
@@ -69,18 +70,43 @@
             {{ $class = cond (modBool $side 2) "narrow left" "narrow right" }}
             {{ $side = add $side 1 }}
           {{ end }}
-          <figure class="{{ $class }} reveal">
-            <a href="{{ $full.RelPermalink }}">
-              {{ partial "responsive-img.html" (dict "img" . "widths" (slice 900 1600 2400) "sizes" (cond $wide "(min-width: 1500px) 1400px, 92vw" "(min-width: 900px) 46vw, 92vw") "alt" $caption) }}
-            </a>
-            {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
-          </figure>
+          {{/*
+            Params de cada foto (resources del front matter):
+            `size: small` más pequeña; `center: true` centrada y algo más
+            pequeña; `row: start` … `row: end` varias fotos en la misma fila
+            (`row: triptych` en la primera: tríptico, juntas y del mismo tamaño).
+          */}}
+          {{ if eq .Params.size "small" }}{{ $class = printf "%s small" $class }}{{ end }}
+          {{ if .Params.center }}{{ $class = "center" }}{{ end }}
+          {{ with .Params.row }}{{ if eq . "start" }}<div class="row">{{ else if eq . "triptych" }}<div class="row triptych">{{ end }}{{ end }}
+          {{ $img := partial "responsive-img.html" (dict "img" . "widths" (slice 900 1600 2400) "sizes" (cond $wide "(min-width: 1500px) 1400px, 92vw" "(min-width: 900px) 46vw, 92vw") "alt" $caption) }}
+          {{ with and $.Params.vellum (eq .Name $.Params.vellum.photo) }}
+            {{/*
+              Papel cebolla: un texto impreso en papel translúcido sobre la foto,
+              como en el libro. Una casilla oculta lo levanta y lo baja (sin JavaScript).
+            */}}
+            <figure class="{{ $class }} has-vellum reveal">
+              <input class="vellum-toggle" type="checkbox" id="vellum">
+              <div class="vellum-frame">
+                <a href="{{ $full.RelPermalink }}">{{ $img }}</a>
+                <label class="vellum" for="vellum" aria-hidden="true"><span class="vellum-text" lang="es">{{ range $.Params.vellum.text }}<span>{{ . }}</span>{{ end }}</span></label>
+              </div>
+              <p class="visually-hidden" lang="es">{{ delimit $.Params.vellum.text " " }}</p>
+              <label class="vellum-hint" for="vellum"><span class="lift">{{ i18n "vellum_lift" }} ↑</span><span class="lower">{{ i18n "vellum_lower" }} ↓</span></label>
+            </figure>
+          {{ else }}
+            <figure class="{{ $class }} reveal">
+              <a href="{{ $full.RelPermalink }}">{{ $img }}</a>
+              {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+            </figure>
+          {{ end }}
+          {{ if eq .Params.row "end" }}</div>{{ end }}
         {{ end }}
       </div>
     {{ end }}
 
     {{ if $isBook }}
-      <nav class="pager" aria-label="{{ i18n "more_projects" }}">
+      <nav class="pager" aria-label="{{ i18n (cond (eq .Section "urtekariak") "more_yearbooks" "more_photobooks") }}">
         {{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span class="eyebrow">←</span> <span class="display">{{ .Title }}</span></a>{{ end }}
         {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}"><span class="display">{{ .Title }}</span> <span class="eyebrow">→</span></a>{{ end }}
       </nav>
