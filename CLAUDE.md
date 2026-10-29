@@ -19,7 +19,7 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
 - Año real de *Cartografía de una despedida*: ahora pone `2025-01-01`, inventado.
 - Textos de la portada (`content/_index.*.md`) y de «Sobre mí» (`content/about/`): son de ejemplo. La foto de «Sobre mí» (`content/about/amaia.jpg`, parámetros `photo` y `photo_credit`) es real y de Javier Martín (Barbanero, enlazado a su Instagram; `photo_credit` admite Markdown): mantener el crédito.
 - Aviso legal (LSSI art. 10) si la web tiene actividad económica, como vender los libros: necesita su nombre completo, NIF y un correo de contacto. Preguntárselos; no inventarlos.
-- Publicada en GitHub Pages (repositorio público `amaiagonzalo/argazkiak`, se publica sola con cada push a `main`) con su dominio **https://amaiagonzalo.eus/** (DNS en cdmon: 4 registros A a GitHub, «@ y www»). Pendiente: activar «Enforce HTTPS» cuando GitHub emita el certificado.
+- Publicada en GitHub Pages (repositorio público `amaiagonzalo/argazkiak`, se publica sola con cada push a `main`) con su dominio **https://amaiagonzalo.eus/** (DNS en cdmon: 4 registros A a GitHub, «@ y www»). HTTPS activado (certificado de GitHub). `www` no resolvía en el DNS el 2026-10-29 aunque se eligió «@ y www» en cdmon: revisar.
 
 ## Decisiones
 
