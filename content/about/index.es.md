@@ -10,4 +10,4 @@ Soy Amaia Gonzalo. Pienso las fotografías como un libro: en secuencia, con sile
 
 He publicado dos fotolibros. *Desde el punto de vista de las estrellas* es un trabajo de poesía visual que presenté en diciembre de 2024 en Montehermoso (Vitoria-Gasteiz). El segundo es *Cartografía de una despedida*.
 
-Además de los libros, hago anuarios y cuadernos.
+Además de libros, hago anuarios y garabateo grupos de fotos en busca de rarezas.

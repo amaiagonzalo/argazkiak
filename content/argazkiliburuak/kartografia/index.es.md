@@ -43,4 +43,4 @@ vellum:
     - "y volar"
     - "para vencerse a una misma."
 ---
-Una invitación a seguir la guía interna, soltando por el camino lo que muere y el gozo que existe en ello.
+Una invitación a seguir la guía interna, soltando por el camino lo que muere y descubrir el gozo que hay en hacerlo.
