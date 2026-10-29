@@ -19,7 +19,7 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
 - Año real de *Cartografía de una despedida*: ahora pone `2025-01-01`, inventado.
 - Textos de la portada (`content/_index.*.md`) y de «Sobre mí» (`content/about/`): son de ejemplo. La foto de «Sobre mí» (`content/about/amaia.jpg`, parámetros `photo` y `photo_credit`) es real y de Javier Martín (Barbanero, enlazado a su Instagram; `photo_credit` admite Markdown): mantener el crédito.
 - Aviso legal (LSSI art. 10) si la web tiene actividad económica, como vender los libros: necesita su nombre completo, NIF y un correo de contacto. Preguntárselos; no inventarlos.
-- Publicar en GitHub Pages (`.github/workflows/hugo.yml` listo). Requiere crear un repositorio **público** en la cuenta `amaiagonzalo`: confirmarlo con ella antes. Dirección prevista: https://amaiagonzalo.github.io/argazkiak/
+- Publicada en GitHub Pages (repositorio público `amaiagonzalo/argazkiak`, se publica sola con cada push a `main`) con su dominio **https://amaiagonzalo.eus/** (DNS en cdmon: 4 registros A a GitHub, «@ y www»). Pendiente: activar «Enforce HTTPS» cuando GitHub emita el certificado.
 
 ## Decisiones
 
@@ -35,6 +35,6 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
 
 ## Comandos
 
-- Ver en local: `hugo server` → http://localhost:1313/argazkiak/ (sin `/argazkiak/` da 404)
+- Ver en local: `hugo server` → http://localhost:1313/
 - Nuevo proyecto: `hugo new content argazkiliburuak/izena/index.eu.md` (o `urtekariak/…` para un anuario) y copiar a `.es.md` / `.en.md`.
 - Comprobar el diseño: capturas con Edge headless (`--force-prefers-reduced-motion` para que la animación de la portada no deje la imagen sin pintar en la captura).
