@@ -74,11 +74,12 @@
             Params de cada foto (resources del front matter):
             `size: small` más pequeña; `center: true` centrada y algo más
             pequeña; `row: start` … `row: end` varias fotos en la misma fila
-            (`row: triptych` en la primera: tríptico, juntas y del mismo tamaño).
+            (`row: middle` en la primera: centradas en vertical; `row: triptych`:
+            tríptico, juntas y del mismo tamaño).
           */}}
           {{ if eq .Params.size "small" }}{{ $class = printf "%s small" $class }}{{ end }}
           {{ if .Params.center }}{{ $class = "center" }}{{ end }}
-          {{ with .Params.row }}{{ if eq . "start" }}<div class="row">{{ else if eq . "triptych" }}<div class="row triptych">{{ end }}{{ end }}
+          {{ with .Params.row }}{{ if eq . "start" }}<div class="row">{{ else if eq . "middle" }}<div class="row middle">{{ else if eq . "triptych" }}<div class="row triptych">{{ end }}{{ end }}
           {{ $img := partial "responsive-img.html" (dict "img" . "widths" (slice 900 1600 2400) "sizes" (cond $wide "(min-width: 1500px) 1400px, 92vw" "(min-width: 900px) 46vw, 92vw") "alt" $caption) }}
           {{ with and $.Params.vellum (eq .Name $.Params.vellum.photo) }}
             {{/*

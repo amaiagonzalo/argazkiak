@@ -19,7 +19,7 @@ disableKinds = ['taxonomy', 'term']
   [cascade.build]
     publishResources = false
   [cascade.target]
-    path = '{/argazkiliburuak/**,/urtekariak/**,/about}'
+    path = '{/argazkiliburuak/**,/urtekariak/**,/zirriborroak,/about}'
 
 [languages]
   [languages.eu]
@@ -33,14 +33,19 @@ disableKinds = ['taxonomy', 'term']
       name = 'Argazkiliburuak'
       pageRef = '/argazkiliburuak'
       weight = 1
+    # Oculto por ahora (anuarios, ver content/urtekariak/):
+    # [[languages.eu.menus.main]]
+    #   name = 'Urtekariak'
+    #   pageRef = '/urtekariak'
+    #   weight = 2
     [[languages.eu.menus.main]]
-      name = 'Urtekariak'
-      pageRef = '/urtekariak'
-      weight = 2
+      name = 'Zirriborroak'
+      pageRef = '/zirriborroak'
+      weight = 3
     [[languages.eu.menus.main]]
       name = 'Niri buruz'
       pageRef = '/about'
-      weight = 3
+      weight = 4
 
   [languages.es]
     locale = 'es-ES'
@@ -59,14 +64,19 @@ disableKinds = ['taxonomy', 'term']
       name = 'Fotolibros'
       pageRef = '/argazkiliburuak'
       weight = 1
+    # Oculto por ahora (anuarios, ver content/urtekariak/):
+    # [[languages.es.menus.main]]
+    #   name = 'Anuarios'
+    #   pageRef = '/urtekariak'
+    #   weight = 2
     [[languages.es.menus.main]]
-      name = 'Anuarios'
-      pageRef = '/urtekariak'
-      weight = 2
+      name = 'Cuaderno'
+      pageRef = '/zirriborroak'
+      weight = 3
     [[languages.es.menus.main]]
       name = 'Sobre mí'
       pageRef = '/about'
-      weight = 3
+      weight = 4
 
   [languages.en]
     locale = 'en-GB'
@@ -85,11 +95,16 @@ disableKinds = ['taxonomy', 'term']
       name = 'Photobooks'
       pageRef = '/argazkiliburuak'
       weight = 1
+    # Oculto por ahora (anuarios, ver content/urtekariak/):
+    # [[languages.en.menus.main]]
+    #   name = 'Yearbooks'
+    #   pageRef = '/urtekariak'
+    #   weight = 2
     [[languages.en.menus.main]]
-      name = 'Yearbooks'
-      pageRef = '/urtekariak'
-      weight = 2
+      name = 'Notebook'
+      pageRef = '/zirriborroak'
+      weight = 3
     [[languages.en.menus.main]]
       name = 'About'
       pageRef = '/about'
-      weight = 3
+      weight = 4

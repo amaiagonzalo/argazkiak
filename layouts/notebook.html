@@ -1,0 +1,35 @@
+{{ define "main" }}
+  {{/*
+    Cuaderno: fotos sueltas agrupadas por el prefijo del nombre (1-…, 2-…).
+    Cada grupo es un bloque de fotos a la misma altura dentro de cada línea
+    (cada foto crece según su proporción), separado del siguiente.
+  */}}
+  <article>
+    <header class="page-head">
+      <h1 class="display">{{ .Title }}</h1>
+    </header>
+    {{ with .Content }}<div class="prose reveal">{{ . }}</div>{{ end }}
+
+    {{ with .Resources.ByType "image" }}
+      <div class="notebook" data-gallery>
+        {{ $current := "" }}
+        {{ range sort . "Name" }}
+          {{ $group := index (split .Name "-") 0 }}
+          {{ if ne $group $current }}
+            {{ if $current }}</div>{{ end }}
+            <div class="notebook-group reveal">
+            {{ $current = $group }}
+          {{ end }}
+          {{ $ratio := div (float .Width) .Height }}
+          {{ $full := .Fit "2400x2400 webp" }}
+          <figure style="--r: {{ $ratio }}">
+            <a href="{{ $full.RelPermalink }}">
+              {{ partial "responsive-img.html" (dict "img" . "widths" (slice 600 1200 1800) "sizes" "(min-width: 900px) 40vw, 92vw" "alt" "") }}
+            </a>
+          </figure>
+        {{ end }}
+        {{ if $current }}</div>{{ end }}
+      </div>
+    {{ end }}
+  </article>
+{{ end }}

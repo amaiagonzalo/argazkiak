@@ -250,6 +250,7 @@ article > .page-head + .prose { padding-top: 0; margin-left: 0; margin-right: au
 .gallery .row figure, .gallery .row .narrow.left, .gallery .row .narrow.right { margin: 0; align-self: auto; }
 .gallery .row .narrow { width: min(46%, 560px); }
 .gallery .row .narrow.small { width: min(30%, 360px); }
+.gallery .row.middle { align-items: center; }
 /* Tríptico: tres fotos juntas, del mismo tamaño */
 .gallery .triptych { gap: clamp(12px, 1.6vw, 24px); }
 .gallery .triptych .narrow { width: auto; flex: 1 1 0; max-width: 440px; }
@@ -394,3 +395,15 @@ body::before {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background: url("../texturas/sumi.svg") center / cover no-repeat;
 }
+
+/*
+  Cuaderno (layouts/notebook.html): un bloque por grupo de fotos. Las fotos
+  de cada línea tienen la misma altura: cada una crece según su proporción
+  (--r = ancho / alto). El ::after evita que la última línea se estire.
+*/
+.notebook { display: flex; flex-direction: column; gap: clamp(96px, 16vh, 180px); padding: clamp(24px, 4vh, 48px) var(--gutter) 0; }
+.notebook-group { display: flex; flex-wrap: wrap; gap: clamp(10px, 1.2vw, 18px); max-width: 1400px; width: 100%; align-self: center; }
+.notebook-group::after { content: ""; flex: 10 1 0; }
+.notebook figure { margin: 0; flex: var(--r) 1 calc(var(--r) * clamp(180px, 22vw, 320px)); }
+.notebook a { display: block; cursor: zoom-in; background: var(--bg-2); }
+.notebook img { display: block; width: 100%; height: auto; }

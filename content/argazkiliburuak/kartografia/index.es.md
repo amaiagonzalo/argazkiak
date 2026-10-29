@@ -29,7 +29,7 @@ resources:
   - src: 07.jpg
     params:
       size: small    # más pequeña que la 8
-      row: start     # 7 y 8 en la misma fila
+      row: start     # 7 y 8 en la misma fila, alineadas por abajo
   - src: 08.jpg
     params:
       row: end
@@ -43,4 +43,4 @@ vellum:
     - "y volar"
     - "para vencerse a una misma."
 ---
-Fotolibro. *Texto pendiente.*
+Una invitación a seguir la guía interna, soltando por el camino lo que muere y el gozo que existe en ello.
