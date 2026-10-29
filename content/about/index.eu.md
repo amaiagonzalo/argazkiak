@@ -11,3 +11,5 @@ Amaia Gonzalo naiz. Liburu moduan pentsatzen ditut argazkiak: sekuentzialki, isi
 Bi argazkiliburu argitaratu ditut. *Desde el punto de vista de las estrellas* poesia bisualeko lan bat da, 2024ko abenduan Montehermoson (Vitoria-Gasteiz) aurkeztua. *Cartografía de una despedida* da bigarrena.
 
 Liburuez gain, urtekariak eta zirriborroak egiten ditut.
+
+Instagram: [@amaiagonzalo](https://www.instagram.com/amaiagonzalo/)
