@@ -7,7 +7,19 @@
       {{ $current := . }}
       {{ range site.Menus.main }}
         {{ $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
-        <li><a href="{{ .URL }}"{{ partial "link-attrs.html" .URL }}{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+        {{/* Submenú: las páginas de la sección (los libros), en el orden de `weight`. */}}
+        {{ $sub := slice }}
+        {{ with .Page }}{{ if .IsSection }}{{ $sub = .Pages }}{{ end }}{{ end }}
+        <li{{ if $sub }} class="has-sub"{{ end }}>
+          <a href="{{ .URL }}"{{ partial "link-attrs.html" .URL }}{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+          {{ with $sub }}
+            <ul class="submenu">
+              {{ range . }}
+                <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a></li>
+              {{ end }}
+            </ul>
+          {{ end }}
+        </li>
       {{ end }}
     </ul>
   </nav>

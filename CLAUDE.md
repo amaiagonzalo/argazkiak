@@ -24,6 +24,8 @@ Web con Hugo (0.168 extended, instalado con winget) y Markdown. Tema propio en `
 ## Decisiones
 
 - Página **Zirriborroak / Garabatos / Notebook** (en castellano, «Garabatos» en el menú y el título; la dirección sigue siendo `/es/cuaderno/`) (`content/zirriborroak/`, `layout: notebook` → `layouts/notebook.html`): fotos sueltas que todavía no son proyecto, de su carpeta `Documents/argazkiak/zirriborroak`. Ella las agrupa por el prefijo del nombre (`1-…`, `2-…`); cada grupo es un bloque de fotos a la misma altura. Las fotos de esa carpeta sin prefijo no se usan. Para actualizar: volver a exportar toda la carpeta (LightCraft, 3000 px, sin metadatos) y sustituir las fotos del bundle.
+- Favicon: «A» en cursiva (Cormorant) color tinta `#ece8df` sobre sumi `#0d0d0c`, generada con la fuente de la web en `static/` (`favicon.ico`, `icon-192.png`, `apple-touch-icon.png`). Era la opción 1 de `static/proba-favicon.html`; ella no llegó a elegir entre las cuatro.
+- Menú principal: al pasar el ratón por una sección con páginas (Fotolibros) se despliegan sus libros, en el orden de `weight` (`layouts/_partials/header.html`). En pantallas táctiles no hay submenú: el enlace lleva a la lista.
 - Anuarios **oculto por ahora** (`build: render: never` y menú comentado en `hugo.toml`).
 - Secciones: **Argazkiliburuak / Fotolibros / Photobooks** (`content/argazkiliburuak/`) y **Urtekariak / Anuarios / Yearbooks** (`content/urtekariak/`, vacía: muestra «Próximamente»; falta saber qué anuarios son y su contenido). Antes la sección se llamaba «Proyectos».
 - Idiomas: euskera (principal, en la raíz), castellano (`/es/`) e inglés (`/en/`). Direcciones traducidas con `permalinks` por idioma en `hugo.toml`.

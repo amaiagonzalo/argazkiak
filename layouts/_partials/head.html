@@ -9,6 +9,11 @@
   <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
 {{ end }}
 
+{{/* Favicon: «A» en cursiva, color tinta sobre sumi (archivos en static/). */}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ "icon-192.png" | relURL }}">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
 {{/*
   Open Graph: la vista previa al compartir un enlace (WhatsApp, Telegram, redes).
   Imagen en JPG (WhatsApp no muestra WebP): la portada de la página o, si no

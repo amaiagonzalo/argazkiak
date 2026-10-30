@@ -141,6 +141,30 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-o
 .over-hero .menu a:not([aria-current]), .over-hero .langs a { opacity: 0.8; }
 .over-hero :is(.menu, .langs) a:hover, .over-hero .site-title:hover { color: var(--accent); opacity: 1; }
 .hero .display { text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+
+/*
+  Submenú: se despliega al pasar el ratón o al llegar con el teclado. En
+  pantallas táctiles no sale: el enlace lleva a la página con la lista.
+*/
+.submenu { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .has-sub { position: relative; }
+  .submenu {
+    display: block; position: absolute; top: 100%; left: -20px; z-index: 20;
+    width: max-content; max-width: 340px; margin: 14px 0 0; padding: 14px 20px; list-style: none;
+    background: var(--bg); border: 1px solid var(--line);
+    visibility: hidden; opacity: 0; transition: opacity 0.2s, visibility 0.2s;
+  }
+  /* Puente invisible para que el ratón no pierda el menú al bajar */
+  .submenu::before { content: ""; position: absolute; inset: -16px 0 auto; height: 16px; }
+  .has-sub:hover .submenu, .has-sub:focus-within .submenu { visibility: visible; opacity: 1; }
+  .submenu li + li { margin-top: 10px; }
+  .site-header .menu .submenu a {
+    display: block; font: 400 19px/1.25 var(--serif); letter-spacing: 0; text-transform: none;
+    text-decoration: none; text-shadow: none; opacity: 1;
+  }
+  .site-header .menu .submenu a:hover { color: var(--accent); }
+}
 .hero .display { font-size: clamp(44px, 8vw, 120px); margin-bottom: 32px; }
 .hero-book .display { margin-bottom: 0; }
 @keyframes hero-in { from { transform: scale(1.08); } to { transform: none; } }
