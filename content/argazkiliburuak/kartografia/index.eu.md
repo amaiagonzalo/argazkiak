@@ -1,7 +1,7 @@
 ---
 title: "Cartografía de una despedida"
 weight: 2  # orden en las listas
-date: 2025-01-01  # PENDIENTE: fecha de publicación real
+date: 2026-01-01  # año confirmado por ella (2026); día y mes desconocidos
 location: ""      # PENDIENTE
 publisher: ""     # PENDIENTE
 buy: ""           # agotado: no hace falta
